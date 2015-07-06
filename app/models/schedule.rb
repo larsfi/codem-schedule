@@ -22,7 +22,7 @@ class Schedule
     end
 
     def to_be_scheduled_jobs
-      Job.where(state: [Job::Scheduled]).order('created_at').limit(available_slots)
+      Job.where(state: [Job::Scheduled]).order('priority desc').limit(available_slots)
     end
 
     def available_slots
@@ -48,7 +48,7 @@ class Schedule
         job.enter(attrs['status'], attrs) if job.state != attrs['status']
 
       else
-        job.enter(Job::Processing)
+        job.enter(Job::OnHold)
       end
 
       job
