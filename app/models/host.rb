@@ -13,12 +13,12 @@ class Host < ActiveRecord::Base
   end
 
   def self.with_available_slots
-    all.map(&:update_status).select { |h| h.available_slots > 0 }.shuffle
+    all.map(&:update_status).select { |h| h.available_slots > 0 }.each
   end
 
   def update_status
-    return self if status_updated_at && status_updated_at > 10.seconds.ago
 
+    self.available_slots = 0
     self.available = false
     self.status_updated_at = Time.current
 

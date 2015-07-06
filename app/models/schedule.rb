@@ -48,7 +48,7 @@ class Schedule
         job.enter(attrs['status'], attrs) if job.state != attrs['status']
 
       else
-        job.enter(Job::OnHold)
+        job.enter(Job::Processing)
       end
 
       job
